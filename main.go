@@ -1,6 +1,8 @@
 package main
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -12,6 +14,7 @@ var albums = []album{
 
 func main() {
 	router := gin.Default()
+	router.GET("/", func(ctx *gin.Context) { ctx.String(http.StatusOK, "hello, world!") })
 	router.GET("/albums", getAlbums)
 	router.GET("/albums/:id", getAlbumByID)
 	router.POST("/albums", postAlbum)
