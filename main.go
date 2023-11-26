@@ -17,9 +17,8 @@ func main() {
 	router := gin.Default()
 	router.GET("/", func(ctx *gin.Context) { ctx.String(http.StatusOK, "hello, world!") })
 	router.GET("/albums", getAlbums)
-	router.GET("/albums/:title", getAlbumByTitle)
-	router.GET("/album/:id", getAlbumByID)
 	router.POST("/albums", postAlbum)
+	router.GET("/albums/:id", getAlbumByID)
 
 	// start the server
 	router.Run("localhost:8000")
