@@ -4,20 +4,23 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
-var albums = []album{
-	{ID: "1", Title: "Riot!", Artist: "Paramore", Price: 24.99},
-	{ID: "2", Title: "Palomino", Artist: "Miranda Lambert", Price: 19.99},
-	{ID: "3", Title: "Brothers", Artist: "The Black Keys", Price: 20.99},
-}
+var db *gorm.DB
 
 func main() {
+	// instantiate the database
+	db = ConnectDatabase()
+
+	// attach the endpoints to the controllers
 	router := gin.Default()
 	router.GET("/", func(ctx *gin.Context) { ctx.String(http.StatusOK, "hello, world!") })
 	router.GET("/albums", getAlbums)
-	router.GET("/albums/:id", getAlbumByID)
+	router.GET("/albums/:title", getAlbumByTitle)
+	router.GET("/album/:id", getAlbumByID)
 	router.POST("/albums", postAlbum)
 
+	// start the server
 	router.Run("localhost:8000")
 }
